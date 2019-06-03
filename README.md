@@ -1,31 +1,31 @@
 This application consumes a sample rss atom xml file and displays the items in a friendly form
 
-### How to start ?
+# How to start ?
 
-# Project setup
+## Project setup
 ```
 npm install
 ```
 
-# Compiles and hot-reloads for development
+## Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-# Compiles and minifies for production
+## Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Technologies used
+# Technologies used
 
-# Server side
+## Server side
 
 - Spring Boot,
 - MongoDB
 
 
-# Client side
+## Client side
 
 - Vue.js,
 - Bootstrap
