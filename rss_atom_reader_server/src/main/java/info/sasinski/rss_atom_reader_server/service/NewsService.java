@@ -29,6 +29,7 @@ public class NewsService {
     }
 
     public News insertOne(News item) {
+
         this.newsRepository.save(item);
 
         return item;
@@ -44,5 +45,9 @@ public class NewsService {
         }
 
         return new ArrayList<>();
+    }
+
+    public void deleteAll() {
+        this.newsRepository.deleteAll();
     }
 }
