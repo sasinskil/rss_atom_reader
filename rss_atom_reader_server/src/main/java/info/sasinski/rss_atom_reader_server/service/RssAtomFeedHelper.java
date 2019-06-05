@@ -5,6 +5,8 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import info.sasinski.rss_atom_reader_server.model.News;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,19 +22,22 @@ public class RssAtomFeedHelper {
     @Autowired
     private NewsService newsService;
 
+    Logger logger = LoggerFactory.getLogger(RssAtomFeedHelper.class);
+
     public RssAtomFeedHelper() {}
 
     public void consumeUrl(String url) {
 
+        logger.info("try to read " + url);
         try (XmlReader reader = new XmlReader(new URL(url))) {
 
             SyndFeed feed = new SyndFeedInput().build(reader);
 
-            System.out.println(feed.getTitle());
-            System.out.println("#######");
+            logger.info(feed.getTitle());
 
             this.newsService.deleteAll();
 
+            logger.info("start mapping to model");
             for(SyndEntry entry : feed.getEntries()) {
 
                 String title = entry.getTitle();
@@ -44,14 +49,12 @@ public class RssAtomFeedHelper {
 
                 News model = new News(title,link,publishDate,description,imageUrl,category);
 
-                System.out.println(model);
-
+                logger.info("save some data " + model);
                 this.newsService.insertOne(model);
 
-                System.out.println("#######");
             }
 
-            System.out.println("Done");
+            logger.info("Done");
 
         } catch (Exception e) {
             e.printStackTrace();
